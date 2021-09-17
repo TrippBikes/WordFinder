@@ -33,9 +33,8 @@ while not haveMustUse:
 for word in englWords:
     if len(word) < 4 or mustUse not in word:
         continue
-    else:
-        if set(letters).issuperset(word):
-            listOWords.append(word)
+    elif set(letters).issuperset(word):
+        listOWords.append(word)
 
 # Alphabetize and check if any words contain all provided letters
 listOWords.sort()
