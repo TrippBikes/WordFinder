@@ -8,6 +8,7 @@ haveLetters = False
 haveMustUse = False
 letters = []
 listOWords = []
+dictOWords = {}
 
 # Collect letters from user, make sure letters are valid.
 while not haveLetters:
@@ -47,15 +48,26 @@ for word in listOWords:
             containsAllLetters = False
     if containsAllLetters:
         listOWords.remove(word)
-        listOWords.insert(0, f"***{word}***")
+        listOWords.insert(0, f"*{word}*")
 
-# Output words to terminal
-print(f"All Possible 4-9 letter words that include the letter '{mustUse.upper()}':")
+# Separate words into a dictionary by length
 for word in listOWords:
-    print(word)
+    lengthOWord = len(word)
+    if "*" in word:
+        lengthOWord -= 2
+    if lengthOWord in dictOWords:
+        dictOWords[lengthOWord].append(word)
+    else:
+        dictOWords[lengthOWord] = [word]
+
 
 # Output words to a text file
 with open("Text File of Words.txt", "w") as output:
-    for word in listOWords:
-        output.write(str(word + "\n"))
+    output.write(f"Available letters : {letters}\n")
+    output.write(f"Must use letter : {mustUse}\n")
+    output.write("*Words that use all of the letters*\n")
+    for key in sorted(dictOWords):
+        output.write(str(f"All possible {key} letter words:\n"))
+        output.write(str(dictOWords[key]))
+        output.write(str("\n"))
 output.close()
